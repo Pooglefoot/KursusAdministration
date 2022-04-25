@@ -1,0 +1,96 @@
+package org.pooglefoot.kursusadministration;
+
+import java.time.LocalDate;
+import java.util.*;
+import java.util.stream.Collectors;
+
+public class Kursus {
+    private final String navn;
+    private List<Aktivitet> aktiviteter = new ArrayList<>();
+
+    public Kursus(String navn) {
+        this.navn = navn;
+    }
+
+    /**
+     * Tilføjer en aktivitet til Kursets aktivitets liste med den givne dato, ansvarlige og beskrivelse.
+     *
+     * @param dato LocalDate
+     * @param ansvarlig String
+     * @param beskrivelse String
+     */
+    public void addAktivitet(LocalDate dato, String ansvarlig, String beskrivelse) {
+        this.aktiviteter.add(new Aktivitet(dato, ansvarlig, beskrivelse));
+    }
+
+    /**
+     * Fjerner en aktivitet fra Kursets Aktivitetsliste der foregår på en given dato med en bestemt ansvarlig.
+     *
+     * @param dato LocalDate
+     * @param ansvarlig String
+     */
+    public void removeAktiviteter(LocalDate dato, String ansvarlig) {
+        // Sammenlign altid objekter med "equals()"
+        /*this.aktiviteter.removeIf(a -> dato.equals(a.getDato()) && ansvarlig.equals(a.getAnsvarlig()));*/
+
+        // I stedet for at manipulere en eksisterende liste og resize arrays, laver vi et nyt vha. streams.
+        this.aktiviteter = this.aktiviteter.stream()
+                .filter(a -> !(dato.equals(a.dato()) && ansvarlig.equals(a.ansvarlig())))
+                .collect(Collectors.toList());
+    }
+
+    /**
+     * Returnerer et Map over samtlige dage hvorpå Kurset har aktiviteter, samt hvor mange aktiviteter på disse dage.
+     *
+     * @return Map
+     */
+    public Map<LocalDate, Integer> aktiviteterPaaDatoer() {
+        var map = new HashMap<LocalDate, Integer>();
+
+        for (var a : this.aktiviteter) {
+            // Reducér funktionskald
+            LocalDate dato = a.dato();
+
+            if (map.containsKey(dato)) {
+                var antal = map.get(dato);
+                map.replace(dato, antal + 1);
+            } else {
+                map.put(dato, 1);
+            }
+        }
+
+        return map;
+    }
+
+    public String getNavn() {
+        return this.navn;
+    }
+
+    public void prettyPrintMap() {
+        System.out.printf("%s%n%n", this.aktiviteterPaaDatoer());
+    }
+
+    /**
+     * Sorterer Kursets Aktivitetsliste før aktiviteter printes pænt til terminalen.
+     */
+    public void prettyPrintAktiviteter() {
+        System.out.printf("%-12s %-12s %s%n", "Dato", "Ansvarlig", "Beskrivelse");
+        this.aktiviteter.stream()
+                .sorted(Comparator.comparing(Aktivitet::ansvarlig))
+                .sorted(Comparator.comparing(Aktivitet::dato))
+                .forEach(Kursus::printAktivitet);
+    }
+
+    /**
+     * Printer en aktivitet pænt til terminalen.
+     * @param a Aktivitet
+     */
+    static void printAktivitet(Aktivitet a) {
+        System.out.printf(
+                "%-12s %-12s %s%n",
+                a.dato(),
+                a.ansvarlig(),
+                a.beskrivelse()
+        );
+    }
+}

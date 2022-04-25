@@ -1,11 +1,19 @@
+package org.pooglefoot.kursusadministration;
+
 import java.time.LocalDate;
 
-public class Aktivitet {
+public record Aktivitet(
+        LocalDate dato,
+        String ansvarlig,
+        String beskrivelse) {
+}
+
+/*public class org.pooglefoot.kursusadministration.Aktivitet {
     private final LocalDate dato;
     private final String ansvarlig;
     private final String beskrivelse;
 
-    public Aktivitet (LocalDate dato, String ansvarlig, String beskrivelse) {
+    public org.pooglefoot.kursusadministration.Aktivitet (LocalDate dato, String ansvarlig, String beskrivelse) {
         this.dato = dato;
         this.ansvarlig = ansvarlig;
         this.beskrivelse = beskrivelse;
@@ -22,4 +30,4 @@ public class Aktivitet {
     public String getBeskrivelse() {
         return this.beskrivelse;
     }
-}
+}*/

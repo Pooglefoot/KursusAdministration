@@ -1,26 +1,30 @@
+package org.pooglefoot.kursusadministration;
+
 import java.time.LocalDate;
 
 public class KursusAdministration {
     public static void main(String[] args) {
         // Tilføjet her da de er dynamiske, vil hellere have dem i addKursusWithAktiviteter.
-        LocalDate dato1 = LocalDate.now();
-        LocalDate dato2 = dato1.plusDays(3);
-        LocalDate dato3 = dato1.plusWeeks(1);
+        // Ville nok bruge en ZonedDateTime, da det højst sandsynligt finder sted i én tidszone.
+        LocalDate dato = LocalDate.now().plusDays(3);
 
-        Kursus mitKursus = addKursusWithAktiviteter("Andeby Gymnasie", dato1, dato2, dato3);
+        Kursus mitKursus = addKursusWithAktiviteter("Andeby Gymnasie");
 
         mitKursus.prettyPrintMap();
         mitKursus.prettyPrintAktiviteter();
         System.out.println();
 
-        mitKursus.removeAktiviteter(dato2, "CB");
+        mitKursus.removeAktiviteter(dato, "CB");
 
         mitKursus.prettyPrintMap();
         mitKursus.prettyPrintAktiviteter();
         System.out.println();
     }
 
-    public static Kursus addKursusWithAktiviteter(String kursusNavn, LocalDate dato1, LocalDate dato2, LocalDate dato3) {
+    public static Kursus addKursusWithAktiviteter(String kursusNavn) {
+        LocalDate dato1 = LocalDate.now();
+        LocalDate dato2 = dato1.plusDays(3);
+        LocalDate dato3 = dato1.plusWeeks(1);
 
         Kursus kursus = new Kursus(kursusNavn);
 
