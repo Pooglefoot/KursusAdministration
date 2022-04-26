@@ -2,18 +2,25 @@ package org.pooglefoot.kursusadministration;
 
 import java.time.LocalDate;
 
+/**
+ * En simpel record for Aktiviteter
+ *
+ * @param dato          Datoen for aktiviteten
+ * @param ansvarlig     Aktivitetens ansvarlige
+ * @param beskrivelse   Beskrivelse af aktiviteten
+ */
 public record Aktivitet(
         LocalDate dato,
         String ansvarlig,
         String beskrivelse) {
 }
 
-/*public class org.pooglefoot.kursusadministration.Aktivitet {
+/*public class Aktivitet {
     private final LocalDate dato;
     private final String ansvarlig;
     private final String beskrivelse;
 
-    public org.pooglefoot.kursusadministration.Aktivitet (LocalDate dato, String ansvarlig, String beskrivelse) {
+    public Aktivitet (LocalDate dato, String ansvarlig, String beskrivelse) {
         this.dato = dato;
         this.ansvarlig = ansvarlig;
         this.beskrivelse = beskrivelse;

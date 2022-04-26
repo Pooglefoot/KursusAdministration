@@ -4,6 +4,9 @@ import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
 
+/**
+ * Klassen Kursus, som har et navn og en liste af aktiviteter.
+ */
 public class Kursus {
     private final String navn;
     private List<Aktivitet> aktiviteter = new ArrayList<>();
@@ -15,9 +18,9 @@ public class Kursus {
     /**
      * Tilføjer en aktivitet til Kursets aktivitets liste med den givne dato, ansvarlige og beskrivelse.
      *
-     * @param dato LocalDate
-     * @param ansvarlig String
-     * @param beskrivelse String
+     * @param dato          Dato for aktivitet
+     * @param ansvarlig     Ansvarlig for aktivitet
+     * @param beskrivelse   Beskrivelse af aktivitet
      */
     public void addAktivitet(LocalDate dato, String ansvarlig, String beskrivelse) {
         this.aktiviteter.add(new Aktivitet(dato, ansvarlig, beskrivelse));
@@ -26,14 +29,12 @@ public class Kursus {
     /**
      * Fjerner en aktivitet fra Kursets Aktivitetsliste der foregår på en given dato med en bestemt ansvarlig.
      *
-     * @param dato LocalDate
-     * @param ansvarlig String
+     * @param dato      Datoen hvor aktiviteter skal slettes
+     * @param ansvarlig Den ansvarlige hvis' kurser skal slettes
      */
     public void removeAktiviteter(LocalDate dato, String ansvarlig) {
-        // Sammenlign altid objekter med "equals()"
         /*this.aktiviteter.removeIf(a -> dato.equals(a.getDato()) && ansvarlig.equals(a.getAnsvarlig()));*/
 
-        // I stedet for at manipulere en eksisterende liste og resize arrays, laver vi et nyt vha. streams.
         this.aktiviteter = this.aktiviteter.stream()
                 .filter(a -> !(dato.equals(a.dato()) && ansvarlig.equals(a.ansvarlig())))
                 .collect(Collectors.toList());
@@ -42,7 +43,8 @@ public class Kursus {
     /**
      * Returnerer et Map over samtlige dage hvorpå Kurset har aktiviteter, samt hvor mange aktiviteter på disse dage.
      *
-     * @return Map
+     * @return  et Map hvor datoer der har aktiviteter er en Key, og antallet af aktiviteter på en dato er den
+     *          tilsvarende Value.
      */
     public Map<LocalDate, Integer> aktiviteterPaaDatoer() {
         var map = new HashMap<LocalDate, Integer>();
@@ -67,7 +69,7 @@ public class Kursus {
     }
 
     public void prettyPrintMap() {
-        System.out.printf("%s%n%n", this.aktiviteterPaaDatoer());
+        System.out.printf("%n%s%n", this.aktiviteterPaaDatoer());
     }
 
     /**
@@ -83,7 +85,8 @@ public class Kursus {
 
     /**
      * Printer en aktivitet pænt til terminalen.
-     * @param a Aktivitet
+     *
+     * @param a Aktiviteten som skal printes pænt.
      */
     static void printAktivitet(Aktivitet a) {
         System.out.printf(

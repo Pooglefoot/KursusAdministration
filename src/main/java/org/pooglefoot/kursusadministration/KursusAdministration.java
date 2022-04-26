@@ -4,16 +4,13 @@ import java.time.LocalDate;
 
 public class KursusAdministration {
     public static void main(String[] args) {
-        // Tilføjet her da de er dynamiske, vil hellere have dem i addKursusWithAktiviteter.
-        // Ville nok bruge en ZonedDateTime, da det højst sandsynligt finder sted i én tidszone.
-        LocalDate dato = LocalDate.now().plusDays(3);
-
         Kursus mitKursus = addKursusWithAktiviteter("Andeby Gymnasie");
 
         mitKursus.prettyPrintMap();
         mitKursus.prettyPrintAktiviteter();
         System.out.println();
 
+        LocalDate dato = LocalDate.now().plusDays(3);
         mitKursus.removeAktiviteter(dato, "CB");
 
         mitKursus.prettyPrintMap();
@@ -21,6 +18,13 @@ public class KursusAdministration {
         System.out.println();
     }
 
+    /**
+     * Bruger et givent navn til at oprette et kursus med aktiviteter der finder sted i dag, om tre dage og om en uge,
+     * med forskellige aktivitetsansvarlige.
+     *
+     * @param   kursusNavn Navnet for kurset der skal oprettes med tilhørende aktiviteter.
+     * @return  Det endelige kursus med tilføjede aktiviteter.
+     */
     public static Kursus addKursusWithAktiviteter(String kursusNavn) {
         LocalDate dato1 = LocalDate.now();
         LocalDate dato2 = dato1.plusDays(3);
